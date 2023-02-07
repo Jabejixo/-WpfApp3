@@ -46,14 +46,14 @@ namespace WpfApp3
                 ((Button)sender).Content = "X";
                 ((Button)sender).IsEnabled = false;    
                 winner();
-                if (win == false & countCkick < 9) AI();
+                if (win == false & countCkick < 9) RoboRandom();
             }
             else if (playerOrRoboRandom == 1)
             {
                 ((Button)sender).Content = "0";
                 ((Button)sender).IsEnabled = false;
                 winner();
-                if (win == false & countCkick < 9) AI();
+                if (win == false & countCkick < 9) RoboRandom();
             }
         }
         private void winner()
@@ -108,38 +108,52 @@ namespace WpfApp3
             {
                 button.Content = "";
             }
-            if (playerOrRoboRandom == 1) AI();
+            if (playerOrRoboRandom == 1) RoboRandom();
         }
-        private void AI()
+        private void RoboRandom()
         {
             zamer++;
-            try
+            element = random.Next(0, 8);
+            if (playerOrRoboRandom == 0 & (string)buttons[element].Content == "")
             {
-                element = random.Next(0, 8);
-                if (playerOrRoboRandom == 0 & (string)buttons[element].Content == "")
-                {
-                    countCkick++;
-                    buttons[element].Content = "0";
-                    buttons[element].IsEnabled = false;
-                    winner();
-                }
-                else if (playerOrRoboRandom == 1 & (string)buttons[element].Content == "")
-                {
-                    countCkick++;
-                    buttons[element].Content = "X";
-                    buttons[element].IsEnabled = false;
-                    winner();
-                }
-                else
-                {
-                    AI();
-                }
-            }
-            catch (StackOverflowException)
-            {
+                countCkick++;
+                buttons[element].Content = "0";
+                buttons[element].IsEnabled = false;
                 winner();
-                if (win == false) Winner.Text = "НИЧЬЯ";
             }
+            else if (playerOrRoboRandom == 1 & (string)buttons[element].Content == "")
+            {
+                countCkick++;
+                buttons[element].Content = "X";
+                buttons[element].IsEnabled = false;
+                winner();
+            }
+            else if (countCkick == 8)
+            {
+                foreach (var button in buttons)
+                {
+                    if ((string)button.Content == "")
+                    {
+                        if (playerOrRoboRandom == 0)
+                        {
+                            button.Content = "0";
+                            button.IsEnabled = false;
+                            Winner.Text = "Ничья";
+                        }
+                        if (playerOrRoboRandom == 1)
+                        {
+                            button.Content = "X";
+                            button.IsEnabled = false;
+                            Winner.Text = "Ничья";
+                        }
+                    }
+                }
+            }
+            else
+            {
+                RoboRandom();
+            }
+
         }
         private void Enabled(bool isEnabled)
         {
