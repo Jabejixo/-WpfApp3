@@ -58,49 +58,33 @@ namespace WpfApp3
         }
         private void winner()
         {
-            if (((string)Button1.Content == "0" && (string)Button2.Content == "0" && (string)Button3.Content == "0")
-                || ((string)Button4.Content == "0" && (string)Button5.Content == "0" && (string)Button6.Content == "0")
-                || ((string)Button7.Content == "0" && (string)Button8.Content == "0" && (string)Button9.Content == "0")
-                || ((string)Button1.Content == "0" && (string)Button5.Content == "0" && (string)Button9.Content == "0")
-                || ((string)Button3.Content == "0" && (string)Button5.Content == "0" && (string)Button7.Content == "0")
-                || ((string)Button1.Content == "0" && (string)Button4.Content == "0" && (string)Button7.Content == "0")
-                || ((string)Button2.Content == "0" && (string)Button5.Content == "0" && (string)Button8.Content == "0")
-                || ((string)Button3.Content == "0" && (string)Button6.Content == "0" && (string)Button9.Content == "0"))
+            if ((string)Button1.Content == "0" && (string)Button2.Content == "0" && (string)Button3.Content == "0"
+                || (string)Button4.Content == "0" && (string)Button5.Content == "0" && (string)Button6.Content == "0"
+                || (string)Button7.Content == "0" && (string)Button8.Content == "0" && (string)Button9.Content == "0"
+                || (string)Button1.Content == "0" && (string)Button5.Content == "0" && (string)Button9.Content == "0"
+                || (string)Button3.Content == "0" && (string)Button5.Content == "0" && (string)Button7.Content == "0"
+                || (string)Button1.Content == "0" && (string)Button4.Content == "0" && (string)Button7.Content == "0"
+                || (string)Button2.Content == "0" && (string)Button5.Content == "0" && (string)Button8.Content == "0"
+                || (string)Button3.Content == "0" && (string)Button6.Content == "0" && (string)Button9.Content == "0")
             {
                 win = true;
                 Winner.Text = "ПОБЕДИЛ НОЛИК";
-                Button1.IsEnabled = false;
-                Button2.IsEnabled = false;
-                Button3.IsEnabled = false;
-                Button4.IsEnabled = false;
-                Button5.IsEnabled = false;
-                Button6.IsEnabled = false;
-                Button7.IsEnabled = false;
-                Button8.IsEnabled = false;
-                Button9.IsEnabled = false;
+                Enabled(false);
             }
-            if (((string)Button1.Content == "X" && (string)Button2.Content == "X" && (string)Button3.Content == "X")
-                || ((string)Button4.Content == "X" && (string)Button5.Content == "X" && (string)Button6.Content == "X")
-                || ((string)Button7.Content == "X" && (string)Button8.Content == "X" && (string)Button9.Content == "X")
-                || ((string)Button1.Content == "X" && (string)Button5.Content == "X" && (string)Button9.Content == "X")
-                || ((string)Button3.Content == "X" && (string)Button5.Content == "X" && (string)Button7.Content == "X")
-                || ((string)Button1.Content == "X" && (string)Button4.Content == "X" && (string)Button7.Content == "X")
-                || ((string)Button2.Content == "X" && (string)Button5.Content == "X" && (string)Button8.Content == "X")
-                || ((string)Button3.Content == "X" && (string)Button6.Content == "X" && (string)Button9.Content == "X"))
+            else if ((string)Button1.Content == "X" && (string)Button2.Content == "X" && (string)Button3.Content == "X"
+                || (string)Button4.Content == "X" && (string)Button5.Content == "X" && (string)Button6.Content == "X"
+                || (string)Button7.Content == "X" && (string)Button8.Content == "X" && (string)Button9.Content == "X"
+                || (string)Button1.Content == "X" && (string)Button5.Content == "X" && (string)Button9.Content == "X"
+                || (string)Button3.Content == "X" && (string)Button5.Content == "X" && (string)Button7.Content == "X"
+                || (string)Button1.Content == "X" && (string)Button4.Content == "X" && (string)Button7.Content == "X"
+                || (string)Button2.Content == "X" && (string)Button5.Content == "X" && (string)Button8.Content == "X"
+                || (string)Button3.Content == "X" && (string)Button6.Content == "X" && (string)Button9.Content == "X")
             {
                 win = true;
                 Winner.Text = "ПОБЕДИЛ КРЕСТИК";
-                Button1.IsEnabled = false;
-                Button2.IsEnabled = false;
-                Button3.IsEnabled = false;
-                Button4.IsEnabled = false;
-                Button5.IsEnabled = false;
-                Button6.IsEnabled = false;
-                Button7.IsEnabled = false;
-                Button8.IsEnabled = false;
-                Button9.IsEnabled = false;
+                Enabled(false);
             }
-            if (((countCkick % 9) == 0 && countCkick != 0) & win == false)
+            else if (((countCkick % 9) == 0 && countCkick != 0) & win == false)
             {
                 Winner.Text = "Ничья";
             }
@@ -119,24 +103,11 @@ namespace WpfApp3
                     playerOrRoboRandom = 0;
                     break;
             }
-            Button1.IsEnabled = true;
-            Button2.IsEnabled = true;
-            Button3.IsEnabled = true;
-            Button4.IsEnabled = true;
-            Button5.IsEnabled = true;
-            Button6.IsEnabled = true;
-            Button7.IsEnabled = true;
-            Button8.IsEnabled = true;
-            Button9.IsEnabled = true;
-            Button1.Content = "";
-            Button2.Content = "";
-            Button3.Content = "";
-            Button4.Content = "";
-            Button5.Content = "";  
-            Button6.Content = "";
-            Button7.Content = "";  
-            Button8.Content = "";
-            Button9.Content = "";
+            Enabled(true);
+            foreach (var button in buttons)
+            {
+                button.Content = "";
+            }
             if (playerOrRoboRandom == 1) AI();
         }
         private void AI()
@@ -168,6 +139,13 @@ namespace WpfApp3
             {
                 winner();
                 if (win == false) Winner.Text = "НИЧЬЯ";
+            }
+        }
+        private void Enabled(bool isEnabled)
+        {
+            foreach (var button in buttons)
+            {
+                button.IsEnabled = isEnabled;
             }
         }
     }
